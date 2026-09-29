@@ -1,12 +1,12 @@
 namespace AppForSEII.API.Models
 {
-    public class Client
+    public class Client:ApplicationUser
     {
         public Client()
         {
         }
 
-        public Client(string id, string name, string surname, string userName, string email, string direccionFacturacion)
+        public Client(string id, string name, string surname, string userName, string direccionFacturacion):base(id, name, surname, userName)
         {
             DireccionFacturacion = direccionFacturacion;
         }
