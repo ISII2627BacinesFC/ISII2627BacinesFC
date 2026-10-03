@@ -56,4 +56,7 @@ public class CompraModelo3D
 
     [Required]
     public Client Cliente { get; set; } = null!;
+
+    [PlantUmlIgnoreAssociation]
+    public IList<LineaCompraModelo> Lineas { get; set; } = new List<LineaCompraModelo>();
 }

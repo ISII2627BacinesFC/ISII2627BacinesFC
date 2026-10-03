@@ -11,6 +11,7 @@ class CompraModelo3D {
     + Descripcion : string? <<get>> <<set>>
     + PrecioTotal : decimal <<get>> <<set>>
     + MetodoPago : MetodoPago <<get>> <<set>>
+    + Lineas : IList<LineaCompraModelo> <<get>> <<set>>
 }
 CompraModelo3D o-> "Cliente" Client
 @enduml

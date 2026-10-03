@@ -5,5 +5,6 @@
 !include .\\ComprarModelos\CompraModelo3D.puml
 !include .\\ComprarModelos\FormatoModelo3D.puml
 !include .\\ComprarModelos\LicenciaModelo3D.puml
+!include .\\ComprarModelos\LineaCompraModelo.puml
 !include .\\ComprarModelos\Modelo3D.puml
 @enduml
