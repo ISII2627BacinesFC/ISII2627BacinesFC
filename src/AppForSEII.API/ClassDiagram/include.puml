@@ -4,4 +4,5 @@
 !include .\\MetodoPago.puml
 !include .\\ComprarModelos\FormatoModelo3D.puml
 !include .\\ComprarModelos\LicenciaModelo3D.puml
+!include .\\ComprarModelos\Modelo3D.puml
 @enduml
