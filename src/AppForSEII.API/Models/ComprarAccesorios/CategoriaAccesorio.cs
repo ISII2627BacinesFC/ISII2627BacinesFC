@@ -1,4 +1,4 @@
-namespace I3DModelos.API.Models
+namespace AppForSEII.API.Models.ComprarAccesorios
 {
     public enum CategoriaAccesorio
     {
