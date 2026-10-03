@@ -1,4 +1,5 @@
 @startuml
 hide methods
 !include include.puml
+CompraModelo3D "1" *-- "1..*" LineaCompraModelo : Lineas
 @enduml
