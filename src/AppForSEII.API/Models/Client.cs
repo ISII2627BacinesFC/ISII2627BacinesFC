@@ -1,4 +1,4 @@
-namespace AppForSEII.API.Models
+namespace AppForSEII.API.Models.ComprarAccesorios
 {
     public class Client:ApplicationUser
     {
@@ -12,5 +12,7 @@ namespace AppForSEII.API.Models
         }
 
         public string? DireccionFacturacion {get;set;}
+
+        public IList<CompraAccesorios> ComprasAccesorios { get; set; } = new List<CompraAccesorios>();
     }
 }
