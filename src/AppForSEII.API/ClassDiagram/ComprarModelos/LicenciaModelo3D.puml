@@ -1,0 +1,9 @@
+@startuml
+class LicenciaModelo3D {
+    + LicenciaModelo3D()
+    + LicenciaModelo3D(nombre:string, fechaExpiracion:DateTime)
+    + Id : int <<get>> <<set>>
+    + Nombre : string <<get>> <<set>>
+    + FechaExpiracion : DateTime <<get>> <<set>>
+}
+@enduml

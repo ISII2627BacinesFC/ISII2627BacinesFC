@@ -1,0 +1,8 @@
+@startuml
+class Client {
+    + Client()
+    + Client(id:string, name:string, surname:string, userName:string, direccionFacturacion:string)
+    + DireccionFacturacion : string? <<get>> <<set>>
+}
+ApplicationUser <|-- Client
+@enduml
