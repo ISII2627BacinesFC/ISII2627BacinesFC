@@ -8,7 +8,7 @@ namespace AppForSEII.API.Models.UC_Reservar
     {
         public Impresora3D()
         {
-            // LineasReserva = new List<LineaReserva>();
+            LineasReserva = new List<LineaReserva>();
         }
 
         public Impresora3D(string nombre, string modelo, TipoImpresora tipo, string? descripcion, decimal precioKilovatioHora, decimal precioReserva) : this()
@@ -49,5 +49,7 @@ namespace AppForSEII.API.Models.UC_Reservar
         [Precision(5, 2)]
         [Range(0.01, 999.99, ErrorMessage = "El precio de reserva debe ser mayor que 0.")]
         public decimal PrecioReserva { get; set; }
+
+        public virtual ICollection<LineaReserva> LineasReserva { get; set; }
     }
 }
