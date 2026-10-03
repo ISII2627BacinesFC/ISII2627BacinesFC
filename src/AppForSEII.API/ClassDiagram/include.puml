@@ -2,6 +2,7 @@
 !include .\\ApplicationUser.puml
 !include .\\Client.puml
 !include .\\MetodoPago.puml
+!include .\\ComprarModelos\CompraModelo3D.puml
 !include .\\ComprarModelos\FormatoModelo3D.puml
 !include .\\ComprarModelos\LicenciaModelo3D.puml
 !include .\\ComprarModelos\Modelo3D.puml
