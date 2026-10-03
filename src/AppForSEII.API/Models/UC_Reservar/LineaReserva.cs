@@ -41,7 +41,7 @@ namespace AppForSEII.API.Models.UC_Reservar
 
         public int? ReservaId { get; set; }
 
-       // [ForeignKey("ReservaId")]
-        //public virtual ReservaImpresora? Reserva { get; set; }
+        [ForeignKey("ReservaId")]
+        public virtual ReservaImpresora? Reserva { get; set; }
     }
 }
