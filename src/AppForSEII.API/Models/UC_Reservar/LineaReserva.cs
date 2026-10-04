@@ -16,7 +16,7 @@ namespace AppForSEII.API.Models.UC_Reservar
             TiempoReserva = tiempoReserva;
             PrecioSubtotal = precioSubtotal;
             Impresora = impresora;
-            ImpresoraId = impresora?.Id ?? 0;
+            ImpresoraId = impresora.Id;
         }
 
         [Key]
@@ -39,9 +39,10 @@ namespace AppForSEII.API.Models.UC_Reservar
         [ForeignKey("ImpresoraId")]
         public virtual Impresora3D Impresora { get; set; } = null!;
 
-        public int? ReservaId { get; set; }
+        [Required]
+        public int ReservaId { get; set; }
 
         [ForeignKey("ReservaId")]
-        public virtual ReservaImpresora? Reserva { get; set; }
+        public virtual ReservaImpresora Reserva { get; set; } = null!;
     }
 }
