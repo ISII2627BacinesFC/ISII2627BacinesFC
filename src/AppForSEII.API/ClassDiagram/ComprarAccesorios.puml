@@ -1,0 +1,5 @@
+@startuml
+hide methods
+!include include.puml
+CompraAccesorios "1" *-- "1..*" LineaCompraAccesorio : LineasCompraAccesorio
+@enduml
