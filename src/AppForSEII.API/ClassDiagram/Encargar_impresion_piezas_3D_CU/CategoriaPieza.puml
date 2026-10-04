@@ -1,0 +1,8 @@
+@startuml
+enum CategoriaPieza {
+    Decoracion,
+    MiniaturasYMaquetas,
+    Repuestos,
+    HerramientasYAccesorios,
+}
+@enduml

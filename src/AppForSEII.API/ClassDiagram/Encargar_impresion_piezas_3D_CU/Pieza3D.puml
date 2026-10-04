@@ -1,0 +1,11 @@
+@startuml
+class Pieza3D {
+    + Pieza3D()
+    + Pieza3D(nombre:string, peso:decimal, categoria:CategoriaPieza)
+    + Id : int <<get>> <<set>>
+    + Nombre : string <<get>> <<set>>
+    + Peso : decimal <<get>> <<set>>
+    + Categoria : CategoriaPieza <<get>> <<set>>
+    + MaterialesValidos : ICollection<Material> <<get>> <<set>>
+}
+@enduml

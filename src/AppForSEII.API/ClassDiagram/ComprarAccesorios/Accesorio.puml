@@ -1,0 +1,12 @@
+@startuml
+class Accesorio {
+    + Accesorio()
+    + Accesorio(nombre:string, categoria:CategoriaAccesorio, compatibilidad:string, cantidadDisponible:int, precio:decimal)
+    + Id : int <<get>> <<set>>
+    + Nombre : string <<get>> <<set>>
+    + Categoria : CategoriaAccesorio <<get>> <<set>>
+    + Compatibilidad : string <<get>> <<set>>
+    + CantidadDisponible : int <<get>> <<set>>
+    + Precio : decimal <<get>> <<set>>
+}
+@enduml
