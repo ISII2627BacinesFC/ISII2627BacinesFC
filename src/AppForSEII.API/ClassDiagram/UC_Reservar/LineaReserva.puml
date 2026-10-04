@@ -1,0 +1,13 @@
+@startuml
+class LineaReserva {
+    + LineaReserva()
+    + LineaReserva(tiempoReserva:TiempoReserva, precioSubtotal:decimal, impresora:Impresora3D)
+    + Id : int <<get>> <<set>>
+    + TiempoReserva : TiempoReserva <<get>> <<set>>
+    + PrecioSubtotal : decimal <<get>> <<set>>
+    + ImpresoraId : int <<get>> <<set>>
+    + <<virtual>> Impresora : Impresora3D <<get>> <<set>>
+    + ReservaId : int <<get>> <<set>>
+    + <<virtual>> Reserva : ReservaImpresora <<get>> <<set>>
+}
+@enduml
