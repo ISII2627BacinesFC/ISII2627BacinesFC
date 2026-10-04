@@ -19,6 +19,7 @@ namespace AppForSEII.API.Models.ComprarAccesorios
 
         public int Id { get; set; }
 
+        [PlantUmlIgnoreAssociation]
         [Required(ErrorMessage = "La fecha de compra es obligatoria.")]
         public DateTime FechaCompra { get; set; }
 
@@ -44,11 +45,14 @@ namespace AppForSEII.API.Models.ComprarAccesorios
         [Precision(10, 2)]
         public decimal PrecioTotal { get; set; }
 
+        [PlantUmlIgnoreAssociation]
         [Required(ErrorMessage = "El método de pago es obligatorio.")]
         public MetodoPago MetodoPago { get; set; }
 
         public Client Cliente { get; set; } = null!;
+        
 
+        [PlantUmlIgnoreAssociation]
         public IList<LineaCompraAccesorio> LineasCompraAccesorio { get; set; } = new List<LineaCompraAccesorio>();
     }
 }

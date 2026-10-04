@@ -21,6 +21,7 @@ namespace AppForSEII.API.Models.ComprarAccesorios
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public string Nombre { get; set; }  = string.Empty;
 
+        [PlantUmlIgnoreAssociation]
         [Required(ErrorMessage = "La categoría es obligatoria.")]
         public CategoriaAccesorio Categoria { get; set; }
 
