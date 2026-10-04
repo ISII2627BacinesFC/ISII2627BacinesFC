@@ -1,0 +1,9 @@
+@startuml
+hide methods
+
+!include include.puml
+Client "1" <-- "0..*" ReservaImpresora : realiza
+ReservaImpresora "1" *-- "1..*" LineaReserva : contiene
+LineaReserva "0..*" --> "1" Impresora3D : impresora
+
+@enduml
