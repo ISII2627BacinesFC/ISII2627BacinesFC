@@ -6,4 +6,9 @@
 !include .\\ComprarAccesorios\CategoriaAccesorio.puml
 !include .\\ComprarAccesorios\CompraAccesorios.puml
 !include .\\ComprarAccesorios\LineaCompraAccesorio.puml
+!include .\\ComprarModelos\CompraModelo3D.puml
+!include .\\ComprarModelos\FormatoModelo3D.puml
+!include .\\ComprarModelos\LicenciaModelo3D.puml
+!include .\\ComprarModelos\LineaCompraModelo.puml
+!include .\\ComprarModelos\Modelo3D.puml
 @enduml

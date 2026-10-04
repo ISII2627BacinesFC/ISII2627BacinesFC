@@ -3,16 +3,14 @@ class CompraAccesorios {
     + CompraAccesorios()
     + CompraAccesorios(fechaCompra:DateTime, nombreCliente:string, apellidosCliente:string, direccionEnvio:string, numeroTelefono:string, precioTotal:decimal, metodoPago:MetodoPago)
     + Id : int <<get>> <<set>>
+    + FechaCompra : DateTime <<get>> <<set>>
     + NombreCliente : string <<get>> <<set>>
     + ApellidosCliente : string <<get>> <<set>>
     + DireccionEnvio : string <<get>> <<set>>
     + NumeroTelefono : string <<get>> <<set>>
     + PrecioTotal : decimal <<get>> <<set>>
+    + MetodoPago : MetodoPago <<get>> <<set>>
+    + LineasCompraAccesorio : IList<LineaCompraAccesorio> <<get>> <<set>>
 }
-class "IList`1"<T> {
-}
-CompraAccesorios --> "FechaCompra" DateTime
-CompraAccesorios --> "MetodoPago" MetodoPago
 CompraAccesorios o-> "Cliente" Client
-CompraAccesorios o-> "LineasCompraAccesorio<LineaCompraAccesorio>" "IList`1"
 @enduml

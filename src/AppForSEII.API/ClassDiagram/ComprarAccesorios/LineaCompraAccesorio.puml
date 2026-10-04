@@ -6,7 +6,7 @@ class LineaCompraAccesorio {
     + Cantidad : int <<get>> <<set>>
     + PrecioUnidad : decimal <<get>> <<set>>
     + Subtotal : decimal <<get>>
+    + CompraAccesorios : CompraAccesorios <<get>> <<set>>
 }
-LineaCompraAccesorio o-> "CompraAccesorios" CompraAccesorios
 LineaCompraAccesorio o-> "Accesorio" Accesorio
 @enduml

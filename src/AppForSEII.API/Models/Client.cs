@@ -1,4 +1,6 @@
-namespace AppForSEII.API.Models.ComprarAccesorios
+using AppForSEII.API.Models.ComprarAccesorios;
+
+namespace AppForSEII.API.Models
 {
     public class Client:ApplicationUser
     {

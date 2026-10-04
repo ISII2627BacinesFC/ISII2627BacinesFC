@@ -14,16 +14,20 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     }
 
 
-    public DbSet<ApplicationUser> ApplicationUsers {get; set;}
+    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-    public DbSet<Client> Clientes {get; set;}
+    public DbSet<Client> Clientes { get; set; }
 
+
+    // DbSets del caso de uso Comprar Modelos 3D
+    public DbSet<LicenciaModelo3D> LicenciasModelo3D { get; set; }
+    public DbSet<Modelo3D> Modelos3D { get; set; }
+    public DbSet<CompraModelo3D> ComprasModelo3D { get; set; }
+    public DbSet<LineaCompraModelo> LineasCompraModelo { get; set; }
 
     // DbSets del caso de uso Comprar Accesorios
-    public DbSet<Accesorio> Accesorios {get; set;} 
-    public DbSet<CompraAccesorios> ComprasAccesorios { get; set;} 
-    public DbSet<LineaCompraAccesorio> LineasCompraAccesorio {get; set;}
-
-
+    public DbSet<Accesorio> Accesorios { get; set; }
+    public DbSet<CompraAccesorios> ComprasAccesorios { get; set; }
+    public DbSet<LineaCompraAccesorio> LineasCompraAccesorio { get; set; }
 
 }
