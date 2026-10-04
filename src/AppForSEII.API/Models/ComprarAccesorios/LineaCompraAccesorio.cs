@@ -26,6 +26,8 @@ namespace AppForSEII.API.Models.ComprarAccesorios
         [Precision(10, 2)]
         public decimal Subtotal => Cantidad * PrecioUnidad;
 
+
+        [PlantUmlIgnoreAssociation]
         public CompraAccesorios CompraAccesorios { get; set; } = null!;
 
         public Accesorio Accesorio { get; set; } = null!;
