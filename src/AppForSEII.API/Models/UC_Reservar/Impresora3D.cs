@@ -25,11 +25,11 @@ namespace AppForSEII.API.Models.UC_Reservar
 
         [Required]
         [StringLength(50, ErrorMessage = "El nombre no puede tener más de 50 caracteres ni menos de 1.", MinimumLength = 1)]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = null!;
 
         [Required]
         [StringLength(50, ErrorMessage = "El modelo no puede tener más de 50 caracteres ni menos de 1.", MinimumLength = 1)]
-        public string Modelo { get; set; }
+        public string Modelo { get; set; } = null!;
 
         [Required]
         public TipoImpresora Tipo { get; set; }

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -32,7 +31,7 @@ namespace AppForSEII.API.Models.UC_Reservar
             PrecioTotal = precioTotal;
             MetodoPago = metodoPago;
             Cliente = client;
-            ClienteId = client?.Id;
+            ClienteId = client.Id;
         }
 
         [Key]
@@ -46,17 +45,17 @@ namespace AppForSEII.API.Models.UC_Reservar
         [Required]
         [StringLength(50, ErrorMessage = "El nombre del cliente no puede tener más de 50 caracteres ni menos de 1.", MinimumLength = 1)]
         [Display(Name = "Nombre del cliente")]
-        public string NombreCliente { get; set; }
+        public string NombreCliente { get; set; }= null!;
 
         [Required]
         [StringLength(100, ErrorMessage = "Los apellidos del cliente no pueden tener más de 100 caracteres ni menos de 1.", MinimumLength = 1)]
         [Display(Name = "Apellidos del cliente")]
-        public string ApellidosCliente { get; set; }
+        public string ApellidosCliente { get; set; }= null!;
 
         [Required]
         [StringLength(150, ErrorMessage = "La dirección de facturación no puede superar los 150 caracteres.")]
         [Display(Name = "Dirección de facturación")]
-        public string DireccionFacturacion { get; set; }
+        public string DireccionFacturacion { get; set; }= null!;
 
         [Required]
         [DataType(DataType.Currency)]
@@ -69,10 +68,10 @@ namespace AppForSEII.API.Models.UC_Reservar
         [Display(Name = "Método de pago")]
         public MetodoPago MetodoPago { get; set; }
 
-        public string? ClienteId { get; set; }
+        public string ClienteId { get; set; }= null!;
 
         [ForeignKey("ClienteId")]
-        public virtual Client? Cliente { get; set; }
+        public virtual Client Cliente { get; set; } = null!;
 
         public virtual ICollection<LineaReserva> LineasReserva { get; set; }
     }
