@@ -16,7 +16,7 @@ namespace AppForSEII.API.Models
         public Material MaterialSeleccionado { get; set; } = null!;
 
         // Relación con EncargoImpresion
-        //public int EncargoImpresionId { get; set; }
-        //public EncargoImpresion EncargoImpresion { get; set; } = null!;
+        public int EncargoImpresionId { get; set; }
+        public EncargoImpresion EncargoImpresion { get; set; } = null!;
     }
 }
