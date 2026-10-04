@@ -1,0 +1,9 @@
+@startuml
+enum CategoriaAccesorio {
+    Boquillas,
+    BasesDeImpresion,
+    Herramientas,
+    KitsDeLimpieza,
+    Repuestos,
+}
+@enduml

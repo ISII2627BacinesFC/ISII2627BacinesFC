@@ -1,0 +1,12 @@
+@startuml
+class Modelo3D {
+    + Modelo3D()
+    + Modelo3D(nombre:string, categoria:string, formato:FormatoModelo3D, precio:decimal, licencia:LicenciaModelo3D)
+    + Id : int <<get>> <<set>>
+    + Nombre : string <<get>> <<set>>
+    + Categoria : string <<get>> <<set>>
+    + Formato : FormatoModelo3D <<get>> <<set>>
+    + Precio : decimal <<get>> <<set>>
+}
+Modelo3D o-> "Licencia" LicenciaModelo3D
+@enduml
