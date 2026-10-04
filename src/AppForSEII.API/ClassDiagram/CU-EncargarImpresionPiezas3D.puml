@@ -1,0 +1,26 @@
+@startuml
+skinparam nodesep 60
+skinparam ranksep 50
+
+hide methods
+
+' 1. Clases base y de usuarios
+!include ApplicationUser.puml
+!include Client.puml
+
+' 2. Clases y tipos del caso de uso
+!include Encargar_impresion_piezas_3D_CU/CategoriaPieza.puml
+!include Encargar_impresion_piezas_3D_CU/Material.puml
+!include Encargar_impresion_piezas_3D_CU/Pieza3D.puml
+!include Encargar_impresion_piezas_3D_CU/LineaEncargo.puml
+!include Encargar_impresion_piezas_3D_CU/EncargoImpresion.puml
+!include MetodoPago.puml
+
+' 3. Relaciones ÚNICAS con cardinalidad exacta (idénticas al modelo conceptual)
+Client "1" <-- "0..*" EncargoImpresion : realiza
+EncargoImpresion "1" *-- "1..*" LineaEncargo : contiene
+LineaEncargo "0..*" --> "1" Pieza3D : pieza
+LineaEncargo "0..*" --> "1" Material : material seleccionado
+Pieza3D "0..*" -- "1..*" Material : materiales validos
+
+@enduml

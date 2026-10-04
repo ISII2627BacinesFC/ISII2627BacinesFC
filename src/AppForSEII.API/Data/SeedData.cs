@@ -29,6 +29,13 @@ namespace AppForSEII.API.Data {
             }
 
             try {
+                SeedPiezasYMateriales(dbContext);
+            }
+            catch (Exception ex) {
+                logger.LogError(ex, "An error occurred seeding the Piezas3D and Materiales in the Database.");
+            }
+
+            try {
                 SeedLicenciasYModelos3D(dbContext);
             }
             catch (Exception ex) {
@@ -78,6 +85,45 @@ namespace AppForSEII.API.Data {
                 if (result.IsCompletedSuccessfully) {
                     userManager.AddToRoleAsync(user, roles[2]).Wait();
                 }
+            }
+        }
+
+        public static void SeedPiezasYMateriales(ApplicationDbContext dbContext) {
+            // Aqui se pueblan materiales si no existen.
+            if (!dbContext.Materiales.Any())
+            {
+                var materiales = new List<Material>
+                {
+                    new Material("PLA", 0.05m, 5000m),
+                    new Material("Resina Blanca", 0.08m, 1200m),
+                    new Material("PETG", 0.06m, 3000m),
+                };
+
+                dbContext.Materiales.AddRange(materiales);
+                dbContext.SaveChanges();
+            }
+
+            // Poblar piezas3D asociadas a materiales validos
+            if (!dbContext.Piezas3D.Any())
+            {
+                var pla = dbContext.Materiales.FirstOrDefault(m => m.Nombre == "PLA")!;
+                var petg = dbContext.Materiales.FirstOrDefault(m => m.Nombre == "PETG")!;
+                var resinaBlanca = dbContext.Materiales.FirstOrDefault(m => m.Nombre == "Resina Blanca")!;
+
+                var pieza1 = new Pieza3D("Engranaje pequeño", 45.5m, CategoriaPieza.Repuestos);
+                pieza1.MaterialesValidos.Add(petg);
+
+                var pieza2 = new Pieza3D("Soporte de camara", 120.0m, CategoriaPieza.HerramientasYAccesorios);
+                pieza2.MaterialesValidos.Add(pla);
+                pieza2.MaterialesValidos.Add(resinaBlanca);
+
+                var pieza3 = new Pieza3D("Miniatura de Pegaso", 85.0m, CategoriaPieza.MiniaturasYMaquetas);
+                pieza3.MaterialesValidos.Add(pla);
+                pieza3.MaterialesValidos.Add(petg);
+                pieza3.MaterialesValidos.Add(resinaBlanca);
+
+                dbContext.Piezas3D.AddRange(pieza1, pieza2, pieza3);
+                dbContext.SaveChanges();
             }
         }
 

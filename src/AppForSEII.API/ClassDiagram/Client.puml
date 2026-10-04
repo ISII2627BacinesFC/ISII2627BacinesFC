@@ -4,8 +4,5 @@ class Client {
     + Client(id:string, name:string, surname:string, userName:string, direccionFacturacion:string)
     + DireccionFacturacion : string? <<get>> <<set>>
 }
-class "IList`1"<T> {
-}
 ApplicationUser <|-- Client
-Client o-> "ComprasAccesorios<CompraAccesorios>" "IList`1"
 @enduml

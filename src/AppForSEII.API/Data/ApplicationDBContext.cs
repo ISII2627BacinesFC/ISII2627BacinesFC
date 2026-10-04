@@ -19,6 +19,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Client> Clientes { get; set; }
 
 
+    // DbSets del caso de uso Encargar impresión de piezas 3D
+    public DbSet<Material> Materiales { get; set; }
+    public DbSet<Pieza3D> Piezas3D { get; set; }
+    public DbSet<LineaEncargo> LineasEncargo { get; set; }
+    public DbSet<EncargoImpresion> EncargosImpresion { get; set; }
+
     // DbSets del caso de uso Comprar Modelos 3D
     public DbSet<LicenciaModelo3D> LicenciasModelo3D { get; set; }
     public DbSet<Modelo3D> Modelos3D { get; set; }
