@@ -47,7 +47,7 @@ namespace AppForSEII.API.Models.ComprarAccesorios
         [Required(ErrorMessage = "El método de pago es obligatorio.")]
         public MetodoPago MetodoPago { get; set; }
 
-        public Client Cliente { get; set; }
+        public Client Cliente { get; set; } = null!;
 
         public IList<LineaCompraAccesorio> LineasCompraAccesorio { get; set; } = new List<LineaCompraAccesorio>();
     }
