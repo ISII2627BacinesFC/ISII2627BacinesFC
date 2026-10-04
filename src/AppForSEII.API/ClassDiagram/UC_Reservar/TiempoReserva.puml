@@ -1,0 +1,11 @@
+@startuml
+enum TiempoReserva {
+    UnaHora,
+    DosHoras,
+    TresHoras,
+    CuatroHoras,
+    CincoHoras,
+    UnDia,
+    DosDias,
+}
+@enduml

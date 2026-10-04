@@ -1,4 +1,5 @@
 using AppForSEII.API.Models;
+using AppForSEII.API.Models.UC_Reservar;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AppForSEII.API.DTOs.ApplicationUserDTO;
@@ -15,6 +16,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<Impresora3D> Impresoras3D { get; set; }
+    public DbSet<LineaReserva> LineasReserva { get; set; }
+    public DbSet<ReservaImpresora> ReservasImpresora { get; set; }
 
     public DbSet<Client> Clientes { get; set; }
 

@@ -11,4 +11,14 @@
 !include .\\ComprarModelos\LicenciaModelo3D.puml
 !include .\\ComprarModelos\LineaCompraModelo.puml
 !include .\\ComprarModelos\Modelo3D.puml
+!include .\\Encargar_impresion_piezas_3D_CU\CategoriaPieza.puml
+!include .\\Encargar_impresion_piezas_3D_CU\EncargoImpresion.puml
+!include .\\Encargar_impresion_piezas_3D_CU\LineaEncargo.puml
+!include .\\Encargar_impresion_piezas_3D_CU\Material.puml
+!include .\\Encargar_impresion_piezas_3D_CU\Pieza3D.puml
+!include .\\UC_Reservar\Impresora3D.puml
+!include .\\UC_Reservar\LineaReserva.puml
+!include .\\UC_Reservar\ReservaImpresora.puml
+!include .\\UC_Reservar\TiempoReserva.puml
+!include .\\UC_Reservar\TipoImpresora.puml
 @enduml
