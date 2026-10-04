@@ -18,7 +18,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     public DbSet<Material> Materiales { get; set; }
-
+    public DbSet<Pieza3D> Piezas3D { get; set; }
 
 
 
