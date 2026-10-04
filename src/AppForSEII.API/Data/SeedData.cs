@@ -1,3 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using AppForSEII.API.Models; 
+using AppForSEII.API.Models.ComprarAccesorios; 
+
 namespace AppForSEII.API.Data {
     public class SeedData {
         public static void Initialize(ApplicationDbContext dbContext, IServiceProvider serviceProvider, ILogger logger) {
@@ -19,14 +28,16 @@ namespace AppForSEII.API.Data {
                 logger.LogError(ex, "An error occurred seeding the Users in the Database.");
             }
 
- 
-
+            try {
+                SeedAccesorios(dbContext);
+            }
+            catch (Exception ex) {
+                logger.LogError(ex, "An error occurred seeding the Accesorios in the Database.");
+            }
         }
 
         public static void SeedRoles(RoleManager<IdentityRole> roleManager, List<string> roles) {
-
             foreach (string roleName in roles) {
-                //it checks such role does not exist in the database 
                 if (!roleManager.RoleExistsAsync(roleName).Result) {
                     IdentityRole role = new IdentityRole();
                     role.Name = roleName;
@@ -34,11 +45,9 @@ namespace AppForSEII.API.Data {
                     IdentityResult roleResult = roleManager.CreateAsync(role).Result;
                 }
             }
-
         }
 
         public static void SeedUsers(UserManager<ApplicationUser> userManager, List<string> roles) {
-            //first, it checks the user does not already exist in the DB
             if (userManager.FindByNameAsync("elena@uclm.es").Result == null) {
                 ApplicationUser user = new ApplicationUser("1", "Elena", "Navarro Martínez", "elena@uclm.es");
                 user.EmailConfirmed = true;
@@ -47,14 +56,11 @@ namespace AppForSEII.API.Data {
                 result.Wait();
 
                 if (result.IsCompletedSuccessfully) {
-                    //administrator role
                     userManager.AddToRoleAsync(user, roles[0]).Wait();
                 }
             }
 
-
             if (userManager.FindByNameAsync("peter@uclm.es").Result == null) {
-                //A customer class has been defined because it has different attributes (purchase, rental, etc.)
                 ApplicationUser user = new ApplicationUser("3", "Peter", "Jackson", "peter@uclm.es");
                 user.EmailConfirmed = true;
 
@@ -63,17 +69,55 @@ namespace AppForSEII.API.Data {
                 result.Wait();
 
                 if (result.IsCompletedSuccessfully) {
-                    //customer role
                     userManager.AddToRoleAsync(user, roles[2]).Wait();
-
                 }
             }
-
         }
 
+        public static void SeedAccesorios(ApplicationDbContext context) {
+            if (context.Accesorios.Any()) {
+                return; 
+            }
 
+            context.Accesorios.AddRange(
+                new Accesorio {
+                    Nombre = "Boquilla de Latón 0.4mm",
+                    Categoria = CategoriaAccesorio.Boquillas,
+                    Compatibilidad = "Ender 3, Prusa i3",
+                    CantidadDisponible = 50,
+                    Precio = 5.99m
+                },
+                new Accesorio {
+                    Nombre = "Base PEI Magnética",
+                    Categoria = CategoriaAccesorio.BasesDeImpresion,
+                    Compatibilidad = "Artillery Genius",
+                    CantidadDisponible = 15,
+                    Precio = 25.50m
+                },
+                new Accesorio {
+                    Nombre = "Alicates de Corte de Precisión",
+                    Categoria = CategoriaAccesorio.Herramientas,
+                    Compatibilidad = "Universal",
+                    CantidadDisponible = 20,
+                    Precio = 8.50m
+                },
+                new Accesorio {
+                    Nombre = "Kit de Agujas Desatascadoras",
+                    Categoria = CategoriaAccesorio.KitsDeLimpieza,
+                    Compatibilidad = "Boquillas 0.4mm",
+                    CantidadDisponible = 30,
+                    Precio = 12.00m
+                },
+                new Accesorio {
+                    Nombre = "Ventilador de Capa 5015",
+                    Categoria = CategoriaAccesorio.Repuestos,
+                    Compatibilidad = "Creality CR-10",
+                    CantidadDisponible = 10,
+                    Precio = 14.99m
+                }
+            );
 
-
-
+            context.SaveChanges();
+        }
     }
 }
