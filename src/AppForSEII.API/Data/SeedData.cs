@@ -130,16 +130,16 @@ namespace AppForSEII.API.Data {
                 var resinaBlanca = dbContext.Materiales.FirstOrDefault(m => m.Nombre == "Resina Blanca")!;
 
                 var pieza1 = new Pieza3D("Engranaje pequeño", 45.5m, CategoriaPieza.Repuestos);
-                pieza1.MaterialesValidos.Add(petg);
+                pieza1.MaterialesValidos.Add(new PiezaMaterial { Pieza = pieza1, Material = petg });
 
                 var pieza2 = new Pieza3D("Soporte de camara", 120.0m, CategoriaPieza.HerramientasYAccesorios);
-                pieza2.MaterialesValidos.Add(pla);
-                pieza2.MaterialesValidos.Add(resinaBlanca);
+                pieza2.MaterialesValidos.Add(new PiezaMaterial { Pieza = pieza2, Material = pla });
+                pieza2.MaterialesValidos.Add(new PiezaMaterial { Pieza = pieza2, Material = resinaBlanca });
 
                 var pieza3 = new Pieza3D("Miniatura de Pegaso", 85.0m, CategoriaPieza.MiniaturasYMaquetas);
-                pieza3.MaterialesValidos.Add(pla);
-                pieza3.MaterialesValidos.Add(petg);
-                pieza3.MaterialesValidos.Add(resinaBlanca);
+                pieza3.MaterialesValidos.Add(new PiezaMaterial { Pieza = pieza3, Material = pla });
+                pieza3.MaterialesValidos.Add(new PiezaMaterial { Pieza = pieza3, Material = petg });
+                pieza3.MaterialesValidos.Add(new PiezaMaterial { Pieza = pieza3, Material = resinaBlanca });
 
                 dbContext.Piezas3D.AddRange(pieza1, pieza2, pieza3);
                 dbContext.SaveChanges();
