@@ -29,7 +29,7 @@ namespace AppForSEII.API.Models
         [Required]
         public CategoriaPieza Categoria {get;set;}
 
-        public ICollection<Material> MaterialesValidos {get;set;} = new HashSet<Material>();
+        public ICollection<PiezaMaterial> MaterialesValidos {get;set;} = new HashSet<PiezaMaterial>();
 
     }      
 }

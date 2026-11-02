@@ -12,6 +12,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<PiezaMaterial>()
+            .HasKey(pm => new { pm.PiezaId, pm.MaterialId});
     }
 
 
@@ -19,6 +22,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Impresora3D> Impresoras3D { get; set; }
     public DbSet<LineaReserva> LineasReserva { get; set; }
     public DbSet<ReservaImpresora> ReservasImpresora { get; set; }
+
+    public DbSet<PiezaMaterial> PiezaMateriales { get; set; }
 
     public DbSet<Client> Clientes { get; set; }
 
