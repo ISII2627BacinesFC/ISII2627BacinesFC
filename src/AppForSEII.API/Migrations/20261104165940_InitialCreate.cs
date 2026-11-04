@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppForSEII.API.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentitySchema : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,6 +101,21 @@ namespace AppForSEII.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LicenciasModelo3D", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Materiales",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PrecioPorGramo = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    StockGramos = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Materiales", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -352,24 +367,27 @@ namespace AppForSEII.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Materiales",
+                name: "PiezaMateriales",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PrecioPorGramo = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    StockGramos = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
-                    Pieza3DId = table.Column<int>(type: "int", nullable: true)
+                    PiezaId = table.Column<int>(type: "int", nullable: false),
+                    MaterialId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Materiales", x => x.ID);
+                    table.PrimaryKey("PK_PiezaMateriales", x => new { x.PiezaId, x.MaterialId });
                     table.ForeignKey(
-                        name: "FK_Materiales_Piezas3D_Pieza3DId",
-                        column: x => x.Pieza3DId,
+                        name: "FK_PiezaMateriales_Materiales_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "Materiales",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PiezaMateriales_Piezas3D_PiezaId",
+                        column: x => x.PiezaId,
                         principalTable: "Piezas3D",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -396,6 +414,42 @@ namespace AppForSEII.API.Migrations
                         name: "FK_LineasCompraAccesorio_ComprasAccesorios_CompraAccesoriosId",
                         column: x => x.CompraAccesoriosId,
                         principalTable: "ComprasAccesorios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LineasEncargo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    PrecioUnidad = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    Subtotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    Pieza3DId = table.Column<int>(type: "int", nullable: false),
+                    MaterialId = table.Column<int>(type: "int", nullable: false),
+                    EncargoImpresionId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LineasEncargo", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LineasEncargo_EncargosImpresion_EncargoImpresionId",
+                        column: x => x.EncargoImpresionId,
+                        principalTable: "EncargosImpresion",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LineasEncargo_Materiales_MaterialId",
+                        column: x => x.MaterialId,
+                        principalTable: "Materiales",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LineasEncargo_Piezas3D_Pieza3DId",
+                        column: x => x.Pieza3DId,
+                        principalTable: "Piezas3D",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -453,42 +507,6 @@ namespace AppForSEII.API.Migrations
                         name: "FK_LineasCompraModelo_Modelos3D_ModeloId",
                         column: x => x.ModeloId,
                         principalTable: "Modelos3D",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LineasEncargo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    PrecioUnidad = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    Subtotal = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    Pieza3DId = table.Column<int>(type: "int", nullable: false),
-                    MaterialId = table.Column<int>(type: "int", nullable: false),
-                    EncargoImpresionId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LineasEncargo", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LineasEncargo_EncargosImpresion_EncargoImpresionId",
-                        column: x => x.EncargoImpresionId,
-                        principalTable: "EncargosImpresion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LineasEncargo_Materiales_MaterialId",
-                        column: x => x.MaterialId,
-                        principalTable: "Materiales",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LineasEncargo_Piezas3D_Pieza3DId",
-                        column: x => x.Pieza3DId,
-                        principalTable: "Piezas3D",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -593,14 +611,14 @@ namespace AppForSEII.API.Migrations
                 column: "ReservaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Materiales_Pieza3DId",
-                table: "Materiales",
-                column: "Pieza3DId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Modelos3D_LicenciaId",
                 table: "Modelos3D",
                 column: "LicenciaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PiezaMateriales_MaterialId",
+                table: "PiezaMateriales",
+                column: "MaterialId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ReservasImpresora_ClienteId",
@@ -639,6 +657,9 @@ namespace AppForSEII.API.Migrations
                 name: "LineasReserva");
 
             migrationBuilder.DropTable(
+                name: "PiezaMateriales");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
@@ -657,19 +678,19 @@ namespace AppForSEII.API.Migrations
                 name: "EncargosImpresion");
 
             migrationBuilder.DropTable(
-                name: "Materiales");
-
-            migrationBuilder.DropTable(
                 name: "Impresoras3D");
 
             migrationBuilder.DropTable(
                 name: "ReservasImpresora");
 
             migrationBuilder.DropTable(
-                name: "LicenciasModelo3D");
+                name: "Materiales");
 
             migrationBuilder.DropTable(
                 name: "Piezas3D");
+
+            migrationBuilder.DropTable(
+                name: "LicenciasModelo3D");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
