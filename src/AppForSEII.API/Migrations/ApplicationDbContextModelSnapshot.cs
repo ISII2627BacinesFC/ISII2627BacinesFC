@@ -427,9 +427,6 @@ namespace AppForSEII.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("Pieza3DId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("PrecioPorGramo")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
@@ -439,8 +436,6 @@ namespace AppForSEII.API.Migrations
                         .HasColumnType("decimal(12,2)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("Pieza3DId");
 
                     b.ToTable("Materiales");
                 });
@@ -503,6 +498,21 @@ namespace AppForSEII.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Piezas3D");
+                });
+
+            modelBuilder.Entity("AppForSEII.API.Models.PiezaMaterial", b =>
+                {
+                    b.Property<int>("PiezaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PiezaId", "MaterialId");
+
+                    b.HasIndex("MaterialId");
+
+                    b.ToTable("PiezaMateriales");
                 });
 
             modelBuilder.Entity("AppForSEII.API.Models.UC_Reservar.Impresora3D", b =>
@@ -857,13 +867,6 @@ namespace AppForSEII.API.Migrations
                     b.Navigation("Pieza");
                 });
 
-            modelBuilder.Entity("AppForSEII.API.Models.Material", b =>
-                {
-                    b.HasOne("AppForSEII.API.Models.Pieza3D", null)
-                        .WithMany("MaterialesValidos")
-                        .HasForeignKey("Pieza3DId");
-                });
-
             modelBuilder.Entity("AppForSEII.API.Models.Modelo3D", b =>
                 {
                     b.HasOne("AppForSEII.API.Models.LicenciaModelo3D", "Licencia")
@@ -873,6 +876,25 @@ namespace AppForSEII.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Licencia");
+                });
+
+            modelBuilder.Entity("AppForSEII.API.Models.PiezaMaterial", b =>
+                {
+                    b.HasOne("AppForSEII.API.Models.Material", "Material")
+                        .WithMany()
+                        .HasForeignKey("MaterialId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppForSEII.API.Models.Pieza3D", "Pieza")
+                        .WithMany("MaterialesValidos")
+                        .HasForeignKey("PiezaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Material");
+
+                    b.Navigation("Pieza");
                 });
 
             modelBuilder.Entity("AppForSEII.API.Models.UC_Reservar.LineaReserva", b =>

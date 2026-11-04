@@ -23,7 +23,7 @@ namespace AppForSEII.API.Controllers
         // Método GET
 
         [HttpGet]
-        [Route("action")]
+        [Route("[action]")]
         [ProducesResponseType(typeof(IList<Pieza3DForEncargoDTO>), (int)HttpStatusCode.OK)]
 
         public async Task<ActionResult<IList<Pieza3DForEncargoDTO>>> GetPiezas3DForEncargo(string? nombre, CategoriaPieza? categoria)
@@ -40,7 +40,7 @@ namespace AppForSEII.API.Controllers
                     p.Categoria,
                     p.Peso,
                     p.MaterialesValidos.OrderBy(pm => pm.Material.PrecioPorGramo).Select(pm => pm.Material.Nombre).FirstOrDefault() ?? "Sin material",
-                    p.Peso * (p.MaterialesValidos.OrderBy(pm => pm.Material.PrecioPorGramo).Select(pm => pm.Material.PrecioPorGramo).FirstOrDefault())
+                    p.Peso * p.MaterialesValidos.OrderBy(pm => pm.Material.PrecioPorGramo).Select(pm => pm.Material.PrecioPorGramo).FirstOrDefault()
                 ))
                 .ToListAsync();
 
