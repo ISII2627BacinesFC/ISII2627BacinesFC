@@ -24,12 +24,20 @@ public class CompraModelo3DDetalleDTO
 
     public int Id { get; set; }
 
+    [Required(ErrorMessage = "El nombre es obligatorio.")]
+    [StringLength(50, ErrorMessage = "El nombre no puede tener más de 50 caracteres.")]
     public string NombreCliente { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "Los apellidos son obligatorios.")]
+    [StringLength(100, ErrorMessage = "Los apellidos no pueden tener más de 100 caracteres.")]
     public string ApellidosCliente { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
+    [EmailAddress(ErrorMessage = "El correo electrónico no es válido.")]
     public string CorreoElectronico { get; set; } = string.Empty;
 
+    [Required(ErrorMessage = "La dirección de facturación es obligatoria.")]
+    [StringLength(150, ErrorMessage = "La dirección no puede tener más de 150 caracteres.")]
     public string DireccionFacturacion { get; set; } = string.Empty;
 
     public DateTime FechaCompra { get; set; }
@@ -38,6 +46,7 @@ public class CompraModelo3DDetalleDTO
 
     public MetodoPago MetodoPago { get; set; }
 
+    [StringLength(500, ErrorMessage = "La descripción no puede tener más de 500 caracteres.")]
     public string? Descripcion { get; set; }
 
     public IList<LineaCompraModeloDTO> Lineas { get; set; } = new List<LineaCompraModeloDTO>();
