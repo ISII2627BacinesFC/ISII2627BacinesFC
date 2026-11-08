@@ -6,7 +6,7 @@ namespace AppForSEII.API.Models.ComprarAccesorios
         {
         }
 
-        public CompraAccesorios(DateTime fechaCompra, string nombreCliente, string apellidosCliente, string direccionEnvio, string numeroTelefono, decimal precioTotal, MetodoPago metodoPago)
+        public CompraAccesorios(DateTime fechaCompra, string nombreCliente, string apellidosCliente, string direccionEnvio, string numeroTelefono, decimal precioTotal, MetodoPago metodoPago, Client cliente)
         {
             FechaCompra = fechaCompra;
             NombreCliente = nombreCliente;
@@ -15,6 +15,7 @@ namespace AppForSEII.API.Models.ComprarAccesorios
             NumeroTelefono = numeroTelefono;
             PrecioTotal = precioTotal;
             MetodoPago = metodoPago;
+            Cliente = cliente;
         }
 
         public int Id { get; set; }

@@ -184,41 +184,11 @@ namespace AppForSEII.API.Data {
             }
 
             context.Accesorios.AddRange(
-                new Accesorio {
-                    Nombre = "Boquilla de Latón 0.4mm",
-                    Categoria = CategoriaAccesorio.Boquillas,
-                    Compatibilidad = "Ender 3, Prusa i3",
-                    CantidadDisponible = 50,
-                    Precio = 5.99m
-                },
-                new Accesorio {
-                    Nombre = "Base PEI Magnética",
-                    Categoria = CategoriaAccesorio.BasesDeImpresion,
-                    Compatibilidad = "Artillery Genius",
-                    CantidadDisponible = 15,
-                    Precio = 25.50m
-                },
-                new Accesorio {
-                    Nombre = "Alicates de Corte de Precisión",
-                    Categoria = CategoriaAccesorio.Herramientas,
-                    Compatibilidad = "Universal",
-                    CantidadDisponible = 20,
-                    Precio = 8.50m
-                },
-                new Accesorio {
-                    Nombre = "Kit de Agujas Desatascadoras",
-                    Categoria = CategoriaAccesorio.KitsDeLimpieza,
-                    Compatibilidad = "Boquillas 0.4mm",
-                    CantidadDisponible = 30,
-                    Precio = 12.00m
-                },
-                new Accesorio {
-                    Nombre = "Ventilador de Capa 5015",
-                    Categoria = CategoriaAccesorio.Repuestos,
-                    Compatibilidad = "Creality CR-10",
-                    CantidadDisponible = 10,
-                    Precio = 14.99m
-                }
+                new Accesorio("Boquilla de Latón 0.4mm", CategoriaAccesorio.Boquillas, "Ender 3, Prusa i3", 50, 5.99m),
+                new Accesorio("Base PEI Magnética", CategoriaAccesorio.BasesDeImpresion, "Artillery Genius", 15, 25.50m),
+                new Accesorio("Alicates de Corte de Precisión", CategoriaAccesorio.Herramientas, "Universal", 20, 8.50m),
+                new Accesorio("Kit de Agujas Desatascadoras", CategoriaAccesorio.KitsDeLimpieza, "Boquillas 0.4mm", 30, 12.00m),
+                new Accesorio("Ventilador de Capa 5015", CategoriaAccesorio.Repuestos, "Creality CR-10", 10, 14.99m)
             );
 
             context.SaveChanges();
@@ -286,4 +256,3 @@ namespace AppForSEII.API.Data {
         }
     }
 }
-
