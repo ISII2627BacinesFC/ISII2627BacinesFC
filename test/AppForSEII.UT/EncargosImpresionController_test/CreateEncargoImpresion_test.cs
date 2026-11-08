@@ -68,6 +68,38 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             Assert.Equal(precioEsperado, actualDTO.PrecioTotal);
             Assert.Equal(precioEsperado, actualDTO.Lineas[0].Subtotal);
         }
+
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateEncargoImpresion_InvalidPayment_BadRequest_test()
+        {
+            // Arrange
+            var mock = new Mock<ILogger<EncargosImpresionController>>();
+            var controller = new EncargosImpresionController(_context, mock.Object);
+
+            var pieza = _context.Piezas3D.First();
+            var material = _context.Materiales.First(m => m.Nombre == "PLA Blanco");
+
+            var dto = new EncargoImpresionCreateDTO(
+                "Peter",
+                "Jackson",
+                "Campus Universitario s/n, Albacete",
+                "600123456",
+                "MetodoInexistente",
+                "Pago inválido",
+                new List<LineaEncargoImpresionCreateDTO>
+                {
+                    new LineaEncargoImpresionCreateDTO(pieza.Id, material.ID, 1)
+                }
+            );
+
+            // Act
+            var result = await controller.CreateEncargoImpresion(dto);
+
+            // Assert
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("Método de pago no válido: MetodoInexistente", badRequest.Value);
+        }
     }
 
 }
