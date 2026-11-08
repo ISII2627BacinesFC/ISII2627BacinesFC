@@ -81,8 +81,8 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             var material = _context.Materiales.First(m => m.Nombre == "PLA Blanco");
 
             var dto = new EncargoImpresionCreateDTO(
-                "Peter",
-                "Jackson",
+                "Ricky",
+                "Bobby",
                 "Campus Universitario s/n, Albacete",
                 "600123456",
                 "MetodoInexistente",
@@ -99,6 +99,68 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             // Assert
             var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
             Assert.Equal("Método de pago no válido: MetodoInexistente", badRequest.Value);
+        }
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateEncargoImpresion_PiezaNotFound_test()
+        {
+            // Arrange
+            var mock = new Mock<ILogger<EncargosImpresionController>>();
+            var controller = new EncargosImpresionController(_context, mock.Object);
+
+            var material = _context.Materiales.First();
+
+            var dto = new EncargoImpresionCreateDTO(
+                "Ricky",
+                "Bobby",
+                "Campus Universitario s/n, Albacete",
+                "600123456",
+                "TarjetaCredito",
+                "Pieza no existe",
+                new List<LineaEncargoImpresionCreateDTO>
+                {
+                    new LineaEncargoImpresionCreateDTO(999, material.ID, 1) // ID 999 no existe
+                }
+            );
+
+            // Act
+            var result = await controller.CreateEncargoImpresion(dto);
+
+            // Assert
+            var notFound = Assert.IsType<NotFoundObjectResult>(result.Result);
+            Assert.Equal("Pieza3D con ID 999 no encontrada.", notFound.Value);
+        }
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateEncargoImpresion_MaterialNotValid_BadRequest_test()
+        {
+            // Arrange
+            var mock = new Mock<ILogger<EncargosImpresionController>>();
+            var controller = new EncargosImpresionController(_context, mock.Object);
+
+            var pieza = _context.Piezas3D.First();
+            // Resina Gris existe en BD pero no está en los MaterialesValidos de esta pieza
+            var materialIncompatible = _context.Materiales.First(m => m.Nombre == "Resina Gris");
+
+            var dto = new EncargoImpresionCreateDTO(
+                "Ricky",
+                "Bobby",
+                "Campus Universitario s/n, Albacete",
+                "600123456",
+                "TarjetaCredito",
+                "Material incompatible",
+                new List<LineaEncargoImpresionCreateDTO>
+                {
+                    new LineaEncargoImpresionCreateDTO(pieza.Id, materialIncompatible.ID, 1)
+                }
+            );
+
+            // Act
+            var result = await controller.CreateEncargoImpresion(dto);
+
+            // Assert
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal($"El material con ID {materialIncompatible.ID} no es válido para la pieza '{pieza.Nombre}'.", badRequest.Value);
         }
     }
 
