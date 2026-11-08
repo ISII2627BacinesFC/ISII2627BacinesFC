@@ -41,19 +41,19 @@ namespace AppForSEII.UT.Piezas3DController_test
             var allTests = new List<object[]>
             {
                 // 1. Sin filtros: devuelve todas ordenadas por nombre
-                new object[] { null, null, new List<Pieza3DForEncargoDTO> { engranajeDTO, jarronDTO } },
+                new object[] { (string?)null, (CategoriaPieza?)null, new List<Pieza3DForEncargoDTO> { engranajeDTO, jarronDTO } },
 
                 // 2. Filtro por nombre
-                new object[] { "Engranaje", null, new List<Pieza3DForEncargoDTO> { engranajeDTO } },
+                new object[] { "Engranaje", (CategoriaPieza?)null, new List<Pieza3DForEncargoDTO> { engranajeDTO } },
 
                 // 3. Filtro por categoría
-                new object[] { null, CategoriaPieza.Decoracion, new List<Pieza3DForEncargoDTO> { jarronDTO } },
+                new object[] { (string?)null, CategoriaPieza.Decoracion, new List<Pieza3DForEncargoDTO> { jarronDTO } },
 
                 // 4. Filtro por nombre y categoría
                 new object[] { "Engranaje", CategoriaPieza.Repuestos, new List<Pieza3DForEncargoDTO> { engranajeDTO } },
 
                 // 5. Sin coincidencias: lista vacía
-                new object[] { "Inexistente", null, new List<Pieza3DForEncargoDTO>() }
+                new object[] { "Inexistente", (CategoriaPieza?)null, new List<Pieza3DForEncargoDTO>() }
             };
 
             return allTests;
