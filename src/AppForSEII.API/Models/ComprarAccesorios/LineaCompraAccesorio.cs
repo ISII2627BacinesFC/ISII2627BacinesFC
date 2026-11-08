@@ -6,10 +6,12 @@ namespace AppForSEII.API.Models.ComprarAccesorios
         {
         }
 
-        public LineaCompraAccesorio(int cantidad, decimal precioUnidad)
+        public LineaCompraAccesorio(int cantidad, decimal precioUnidad, Accesorio accesorio, CompraAccesorios compraAccesorios)
         {
             Cantidad = cantidad;
             PrecioUnidad = precioUnidad;
+            Accesorio = accesorio;
+            CompraAccesorios = compraAccesorios;
         }
 
         public int Id { get; set; }
