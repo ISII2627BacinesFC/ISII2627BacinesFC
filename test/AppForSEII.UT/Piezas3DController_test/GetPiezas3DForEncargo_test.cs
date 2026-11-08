@@ -33,26 +33,49 @@ namespace AppForSEII.UT.Piezas3DController_test
             _context.SaveChangesAsync();
         }
 
-        [Fact]
-        public async Task GetPiezas3DForEncargo_SinFiltros_ReturnsOk()
+        public static IEnumerable<object[]> TestCasesFor_GetPiezas3DForEncargo()
         {
-            await MetodoSeed();
-            var expectedDTOs = new List<Pieza3DForEncargoDTO>
+            var engranajeDTO = new Pieza3DForEncargoDTO(1, "Engranaje especial", CategoriaPieza.Repuestos, 50m, "PLA Blanco", 2.5m);
+            var jarronDTO = new Pieza3DForEncargoDTO(2, "Jarron Pequeño", CategoriaPieza.Decoracion, 100m, "Resina Premium", 12.0m);
+
+            var allTests = new List<object[]>
             {
-                new Pieza3DForEncargoDTO(1, "Engranaje especial", CategoriaPieza.Repuestos, 50m,"PLA Blanco", 2.5m),
-                new Pieza3DForEncargoDTO(2, "Jarron Pequeño", CategoriaPieza.Decoracion, 100m,"Resina Premium", 12m)
+                // 1. Sin filtros: devuelve todas ordenadas por nombre
+                new object[] { null, null, new List<Pieza3DForEncargoDTO> { engranajeDTO, jarronDTO } },
+
+                // 2. Filtro por nombre
+                new object[] { "Engranaje", null, new List<Pieza3DForEncargoDTO> { engranajeDTO } },
+
+                // 3. Filtro por categoría
+                new object[] { null, CategoriaPieza.Decoracion, new List<Pieza3DForEncargoDTO> { jarronDTO } },
+
+                // 4. Filtro por nombre y categoría
+                new object[] { "Engranaje", CategoriaPieza.Repuestos, new List<Pieza3DForEncargoDTO> { engranajeDTO } },
+
+                // 5. Sin coincidencias: lista vacía
+                new object[] { "Inexistente", null, new List<Pieza3DForEncargoDTO>() }
             };
 
-            // Invocar al endpoint sin filtros
-            var actionResult = await controller.GetPiezas3DForEncargo(null,null);
-
-            // Verificar que el resultado sea OK
-            var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
-            var actualDTOs = Assert.IsType<List<Pieza3DForEncargoDTO>>(okResult.Value);
-            Assert.Equal(expectedDTOs.Count, actualDTOs.Count);
-            Assert.Equal(expectedDTOs, actualDTOs);
+            return allTests;
         }
-        
-        
+
+        [Theory]
+        [Trait("LevelTesting", "Unit Testing")]
+        [MemberData(nameof(TestCasesFor_GetPiezas3DForEncargo))]
+        public async Task GetPiezas3DForEncargo_OK_test(string? nombre, CategoriaPieza? categoria, List<Pieza3DForEncargoDTO> expectedPiezas)
+        {
+            // Arrange
+            var mock = new Mock<ILogger<Piezas3DController>>();
+            ILogger<Piezas3DController> logger = mock.Object;
+            var controller = new Piezas3DController(_context, logger);
+
+            // Act
+            var result = await controller.GetPiezas3DForEncargo(nombre, categoria);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
+            var piezasactualDTOs = Assert.IsType<List<Pieza3DForEncargoDTO>>(okResult.Value);
+            Assert.Equal(expectedPiezas, piezasactualDTOs);
+        }
     }
 }
