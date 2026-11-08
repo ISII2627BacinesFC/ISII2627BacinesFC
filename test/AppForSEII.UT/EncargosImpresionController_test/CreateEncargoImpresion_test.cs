@@ -16,6 +16,8 @@ namespace AppForSEII.UT.EncargosImpresionController_test
     {
         public CreateEncargoImpresion_test()
         {
+            var cliente = new Client("1", "Ricky", "Bobby", "ricky.bobby@alu.uclm.es", "Campus Universitario s/n, Albacete");
+            _context.Users.Add(cliente);
             // 1. Sembrado de Materiales
             var pla = new Material("PLA Blanco", 0.05m, 1000m);
             var resina = new Material("Resina Gris", 0.08m, 500m);

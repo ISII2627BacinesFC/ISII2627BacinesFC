@@ -74,6 +74,12 @@ namespace AppForSEII.API.Controllers.EncargarImpresionPiezas3D_Controller
             {
                 return BadRequest($"Método de pago no válido: {dto.MetodoPago}");
             }
+            var cliente = await _context.Users.OfType<Client>().FirstOrDefaultAsync();
+            if (cliente == null)
+            {
+                return BadRequest("No existe ningún cliente registrado para asociar al encargo.");
+            }
+
             var encargo = new EncargoImpresion
             {
                 FechaEncargo = DateTime.Now,
@@ -87,6 +93,7 @@ namespace AppForSEII.API.Controllers.EncargarImpresionPiezas3D_Controller
             };
 
             decimal precioTotalEncargo = 0m;
+            
             foreach (var item in dto.Lineas)
             {
                 var pieza = await _context.Piezas3D
