@@ -21,7 +21,7 @@ namespace AppForSEII.API.Controllers.EncargarImpresionPiezas3D_Controller
             _logger = logger;
         }
 
-        //GET encargo impresión
+        //GET encargo impresion
         [HttpGet("{id}")]
         public async Task<ActionResult<EncargoImpresionDetalleDTO>> GetEncargoImpresion(int id)
         {
