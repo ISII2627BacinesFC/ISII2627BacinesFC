@@ -70,10 +70,18 @@ namespace AppForSEII.API.Controllers.EncargarImpresionPiezas3D_Controller
             {
                 return BadRequest("El encargo debe contener al menos una línea.");
             }
+
             if (!Enum.TryParse<MetodoPago>(dto.MetodoPago, true, out var metodoPagoEnum))
             {
                 return BadRequest($"Método de pago no válido: {dto.MetodoPago}");
             }
+
+            var cliente = await _context.Users.OfType<Client>().FirstOrDefaultAsync();
+            if (cliente == null)
+            {
+                return BadRequest("No existe ningún cliente registrado para asociar al encargo.");
+            }
+
             var encargo = new EncargoImpresion
             {
                 FechaEncargo = DateTime.Now,
@@ -83,10 +91,13 @@ namespace AppForSEII.API.Controllers.EncargarImpresionPiezas3D_Controller
                 NumeroTelefono = dto.NumeroTelefono,
                 Descripcion = dto.Descripcion,
                 MetodoPago = metodoPagoEnum,
+                ClienteId = cliente.Id,
+                Cliente = cliente,
                 LineasEncargo = new List<LineaEncargo>()
             };
 
             decimal precioTotalEncargo = 0m;
+
             foreach (var item in dto.Lineas)
             {
                 var pieza = await _context.Piezas3D
