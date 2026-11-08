@@ -32,5 +32,10 @@ namespace AppForSEII.API.DTOs.EncargoImpresionDTOs
                 PrecioUnitario == dto.PrecioUnitario &&
                 Subtotal == dto.Subtotal;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, PiezaNombre, MaterialNombre, Cantidad, PrecioUnitario, Subtotal);
+        }
     }
 }
