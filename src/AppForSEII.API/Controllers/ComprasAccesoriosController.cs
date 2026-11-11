@@ -58,15 +58,24 @@ namespace AppForSEII.API.Controllers
             // Las validaciones de los campos obligatorios (FA 7.1) las hace [ApiController]
             // con los atributos del DTO antes de entrar en el método.
 
+ 
+
             // FA 4: no se puede continuar sin ningún accesorio en el carrito
             if (compraParaCrear.Lineas.Count == 0)
                 ModelState.AddModelError("Lineas", "¡Error! Debes incluir al menos un accesorio en la compra");
+
+
+            //si no termina por Castilla La Mancha...
+            if (!compraParaCrear.DireccionEnvio.EndsWith("Castilla-La Mancha"))  
+                ModelState.AddModelError("DescripcionEnvio", "¡Error! Solo se realizan envios dentro de Castilla-La Mancha"); 
 
             // Precondición: el cliente debe estar registrado
             Client? cliente = await _context.Clientes
                 .FirstOrDefaultAsync(c => c.UserName == compraParaCrear.UserNameCliente);
             if (cliente == null)
                 ModelState.AddModelError("Cliente", "¡Error! El usuario no está registrado");
+
+
 
             if (ModelState.ErrorCount > 0)
                 return BadRequest(new ValidationProblemDetails(ModelState));

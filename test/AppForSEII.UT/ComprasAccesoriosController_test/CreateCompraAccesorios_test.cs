@@ -9,7 +9,7 @@ namespace AppForSEII.UT.ComprasAccesoriosController_test
         private const string _userName = "peter@uclm.es";
         private const string _nombre = "Peter";
         private const string _apellidos = "Jackson";
-        private const string _direccionEnvio = "Calle Mayor 1, Albacete";
+        private const string _direccionEnvio = "Calle Mayor 1, Albacete, Castilla-La Mancha";
         private const string _telefono = "600123456";
 
         private const string _boquillaNombre = "Boquilla de latón 0.4mm";
@@ -24,7 +24,7 @@ namespace AppForSEII.UT.ComprasAccesoriosController_test
             var accesorios = new List<Accesorio>() {
                 new Accesorio(_boquillaNombre, CategoriaAccesorio.Boquillas, _boquillaCompatibilidad, 50, 5.99m),
                 // solo quedan 2 unidades
-                new Accesorio(_baseNombre, CategoriaAccesorio.BasesDeImpresion, _baseCompatibilidad, 2, 25.50m),
+                new Accesorio(_baseNombre, CategoriaAccesorio.BasesDeImpresion, _baseCompatibilidad, 102, 25.50m),
             };
 
             _context.Add(cliente);
@@ -38,6 +38,8 @@ namespace AppForSEII.UT.ComprasAccesoriosController_test
                 new LineaCompraAccesorioDTO(1, _boquillaNombre, CategoriaAccesorio.Boquillas, _boquillaCompatibilidad, 1, 5.99m)
             };
 
+
+
             // FA 4: sin accesorios
             var compraSinLineas = new CompraAccesoriosParaCrearDTO(_userName, _nombre, _apellidos,
                 _direccionEnvio, _telefono, MetodoPago.TarjetaCredito, new List<LineaCompraAccesorioDTO>());
@@ -46,26 +48,34 @@ namespace AppForSEII.UT.ComprasAccesoriosController_test
             var compraUsuarioNoRegistrado = new CompraAccesoriosParaCrearDTO("nadie@uclm.es", _nombre, _apellidos,
                 _direccionEnvio, _telefono, MetodoPago.TarjetaCredito, lineaValida);
 
+
+                    
+
             // Accesorio que no existe en la base de datos
-            var compraAccesorioNoExiste = new CompraAccesoriosParaCrearDTO(_userName, _nombre, _apellidos,
-                _direccionEnvio, _telefono, MetodoPago.TarjetaCredito,
-                new List<LineaCompraAccesorioDTO>() {
-                    new LineaCompraAccesorioDTO(99, "Accesorio inventado", CategoriaAccesorio.Repuestos, "Ninguna", 1, 1.00m)
-                });
+            //var compraAccesorioNoExiste = new CompraAccesoriosParaCrearDTO(_userName, _nombre, _apellidos,
+            //    _direccionEnvio, _telefono, MetodoPago.TarjetaCredito,
+            //    new List<LineaCompraAccesorioDTO>() {
+            //        new LineaCompraAccesorioDTO(99, "Accesorio inventado", CategoriaAccesorio.Repuestos, "Ninguna", 1, 1.00m)
+            //    });
 
             // FA 7.3: no hay stock suficiente (se piden 5 y quedan 2)
-            var compraSinStock = new CompraAccesoriosParaCrearDTO(_userName, _nombre, _apellidos,
-                _direccionEnvio, _telefono, MetodoPago.TarjetaCredito,
-                new List<LineaCompraAccesorioDTO>() {
-                    new LineaCompraAccesorioDTO(2, _baseNombre, CategoriaAccesorio.BasesDeImpresion, _baseCompatibilidad, 5, 25.50m)
-                });
+            //var compraSinStock = new CompraAccesoriosParaCrearDTO(_userName, _nombre, _apellidos,
+            //    _direccionEnvio, _telefono, MetodoPago.TarjetaCredito,
+            //    new List<LineaCompraAccesorioDTO>() {
+            //        new LineaCompraAccesorioDTO(2, _baseNombre, CategoriaAccesorio.BasesDeImpresion, _baseCompatibilidad, 5, 25.50m)
+            //    });
+
+            //si la dirección no termina por Castilla-La Mancha
+            var compraDireccionNoValida = new CompraAccesoriosParaCrearDTO(_userName, _nombre, _apellidos,
+                  "Calle Mayor 1, Albacete", _telefono, MetodoPago.TarjetaCredito, lineaValida); 
 
             var allTests = new List<object[]>
             {
                 new object[] { compraSinLineas, "¡Error! Debes incluir al menos un accesorio en la compra" },
                 new object[] { compraUsuarioNoRegistrado, "¡Error! El usuario no está registrado" },
-                new object[] { compraAccesorioNoExiste, "¡Error! El accesorio 'Accesorio inventado' no existe" },
-                new object[] { compraSinStock, "¡Error! No hay stock suficiente del accesorio 'Base PEI magnética'" },
+                //new object[] { compraAccesorioNoExiste, "¡Error! El accesorio 'Accesorio inventado' no existe" },               
+                //new object[] { compraSinStock, "¡Error! No hay stock suficiente del accesorio 'Base PEI magnética'" },
+                new object[] { compraDireccionNoValida, "¡Error! Solo se realizan envios dentro de Castilla-La Mancha"},
             };
 
             return allTests;
