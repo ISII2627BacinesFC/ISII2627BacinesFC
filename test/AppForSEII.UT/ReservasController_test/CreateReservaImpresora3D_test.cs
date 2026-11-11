@@ -96,6 +96,12 @@ namespace AppForSEII.UT.ReservasController_test
                     "Error! La dirección de facturación es obligatoria"
                 },
 
+                new object[]
+                {
+                    ReservaParaCrear(direccionFacturacion: "Calle Mayor 5, Madrid"),
+                    "¡Error! Solo se admiten reservas con dirección de facturación en Albacete"
+                },
+
                 // Flujo Alternativo 7.1: Método de pago no admitido/inválido
                 new object[]
                 {
