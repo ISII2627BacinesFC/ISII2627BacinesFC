@@ -210,7 +210,7 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             var material = _context.Materiales.First(m => m.Nombre == "PLA Blanco");
 
             var dto = new EncargoImpresionCreateDTO(
-                "Ricardo",
+                "Ricky",
                 "Bobby",
                 "Campus Universitario s/n, Albacete",
                 "600123456",
