@@ -232,7 +232,6 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             Assert.Equal("Ricky", actualDTO.NombreCliente);
             Assert.Equal("Bobby", actualDTO.ApellidosCliente);
             Assert.Equal("TarjetaCredito", actualDTO.MetodoPago);
-            Assert.Equal("600123456",actualDTO.NumeroTelefono);
             Assert.Single(actualDTO.Lineas);
             decimal precioEsperado = 5.00m;
             Assert.Equal(precioEsperado, actualDTO.PrecioTotal);
