@@ -36,6 +36,8 @@ namespace AppForSEII.API.DTOs.EncargoImpresionDTOs
         public string DireccionEnvio { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El número de teléfono es obligatorio.")]
+        //Modiciacion Sprint2 Autoria:
+        [StringLength(9)]
         public string NumeroTelefono { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "El método de pago es obligatorio.")]
