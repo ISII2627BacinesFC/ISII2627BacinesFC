@@ -86,6 +86,10 @@ namespace AppForSEII.API.Controllers
             if (string.IsNullOrWhiteSpace(reservaParaCrear.DireccionFacturacion))
                 ModelState.AddModelError("DireccionFacturacion", "Error! La dirección de facturación es obligatoria");
 
+            // Validación de dirección de facturación - Examen
+            if (!reservaParaCrear.DireccionFacturacion.EndsWith("Albacete"))
+                ModelState.AddModelError("DireccionFacturacion", "¡Error! Solo se admiten reservas con dirección de facturación en Albacete");
+
             // Flujo Alternativo 7.1: Validación de método de pago válido en el enum
             if (!Enum.IsDefined(typeof(MetodoPago), reservaParaCrear.MetodoPago))
                 ModelState.AddModelError("MetodoPago", "Error! El método de pago no es válido");
