@@ -35,15 +35,15 @@ namespace AppForSEII.API.DTOs.Impresora3DDTOs
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Error! El nombre es obligatorio")]
-        [StringLength(50, ErrorMessage = "Error! El nombre no puede tener más de 50 caracteres")]
+        [StringLength(50, ErrorMessage = "El nombre del cliente no puede tener más de 50 caracteres ni menos de 1.", MinimumLength = 1)]
         public string NombreCliente { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Error! Los apellidos son obligatorios")]
-        [StringLength(50, ErrorMessage = "Error! Los apellidos no pueden tener más de 50 caracteres")]
+        [StringLength(50, ErrorMessage = "Los apellidos del cliente no pueden tener más de 50 caracteres ni menos de 1.", MinimumLength = 1)]
         public string ApellidosCliente { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Error! La dirección de facturación es obligatoria")]
-        [StringLength(100, ErrorMessage = "Error! La dirección de facturación no puede tener más de 100 caracteres")]
+        [StringLength(150, ErrorMessage = "Error! La dirección de facturación no puede tener más de 150 caracteres")]
         public string DireccionFacturacion { get; set; } = string.Empty;
 
         public DateTime FechaReserva { get; set; }
