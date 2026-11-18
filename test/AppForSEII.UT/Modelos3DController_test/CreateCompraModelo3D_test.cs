@@ -39,11 +39,18 @@ namespace AppForSEII.UT.Modelos3DController_test
                 DateTime.Today, 0, metodoPago, "Para imprimir en clase", lineas);
         }
 
+        private static CompraModelo3DDetalleDTO CompraParaCrearPrueba(string correo, MetodoPago metodoPago,
+            IList<LineaCompraModeloDTO> lineas)
+        {
+            return new CompraModelo3DDetalleDTO(0, "Peter", "Jackson", correo, "Campus Universitario s/n, Albacete",
+                DateTime.Today, 0, metodoPago, "No se que escribir como descripción, espero q pase los 50 caracteres todo esto que estoy poniendo, si no igual lo puedo alargar un poco más, espero sacar un 10 y si no pues nada", lineas);
+        }
+
         public static IEnumerable<object[]> TestCasesFor_CreateCompraModelo3D_Error()
         {
             var allTests = new List<object[]>
             {
-                // Sin modelos 3D (FA 5)
+                // Sin modelos 3D (FA 5 + Prueba)
                 new object[] { CompraParaCrear("peter@uclm.es", MetodoPago.PayPal,
                     new List<LineaCompraModeloDTO>()),
                     "Error! Debes incluir al menos un modelo 3D para comprar" },
@@ -63,6 +70,10 @@ namespace AppForSEII.UT.Modelos3DController_test
                 new object[] { CompraParaCrear("peter@uclm.es", MetodoPago.PayPal,
                     new List<LineaCompraModeloDTO>() { LineaParaCrear(1, 0) }),
                     "Error! La cantidad de licencias del modelo Dragón articulado debe ser al menos 1" },
+                // Método de pago no permitido
+                new object[] { CompraParaCrearPrueba("peter@uclm.es", MetodoPago.PayPal,
+                    new List<LineaCompraModeloDTO>() { LineaParaCrear(1, 1) }),
+                    "Error! La descripción no puede superar los 50 caracteres" },
             };
 
             return allTests;
@@ -87,6 +98,7 @@ namespace AppForSEII.UT.Modelos3DController_test
             var errorActual = problemDetails.Errors.First().Value[0];
             Assert.Equal(errorEsperado, errorActual);
         }
+
 
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]

@@ -57,6 +57,9 @@ namespace AppForSEII.API.Controllers
             if (compraParaCrear.MetodoPago == MetodoPago.Bizum)
                 ModelState.AddModelError("MetodoPago", "Error! El método de pago debe ser tarjeta de crédito o PayPal");
 
+            if (compraParaCrear.Descripcion.Length > 50)
+                ModelState.AddModelError("Descripción", "Error! La descripción no puede superar los 50 caracteres");
+
             Client? cliente = await _context.Clientes
                 .FirstOrDefaultAsync(c => c.UserName == compraParaCrear.CorreoElectronico);
 
@@ -65,6 +68,7 @@ namespace AppForSEII.API.Controllers
 
             if (ModelState.ErrorCount > 0)
                 return BadRequest(new ValidationProblemDetails(ModelState));
+            
 
             var compra = new CompraModelo3D(DateTime.Now, compraParaCrear.NombreCliente, compraParaCrear.ApellidosCliente,
                 compraParaCrear.CorreoElectronico, compraParaCrear.DireccionFacturacion, compraParaCrear.Descripcion,
