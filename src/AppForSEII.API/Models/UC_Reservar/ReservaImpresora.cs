@@ -48,7 +48,7 @@ namespace AppForSEII.API.Models.UC_Reservar
         public string NombreCliente { get; set; }= null!;
 
         [Required]
-        [StringLength(100, ErrorMessage = "Los apellidos del cliente no pueden tener más de 100 caracteres ni menos de 1.", MinimumLength = 1)]
+        [StringLength(50, ErrorMessage = "Los apellidos del cliente no pueden tener más de 50 caracteres ni menos de 1.", MinimumLength = 1)]
         [Display(Name = "Apellidos del cliente")]
         public string ApellidosCliente { get; set; }= null!;
 

@@ -24,8 +24,7 @@ namespace AppForSEII.API.Controllers
             _logger = logger;
         }
 
-        // GET: api/ReservasImpresora/5
-        [HttpGet]
+        // GET: Impresora3DController/ReservasImpresoraController/GetReservaImpresora3D/{id}
         [Route("{id}")]
         [ProducesResponseType(typeof(ReservaImpresoraDetalleDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -65,7 +64,7 @@ namespace AppForSEII.API.Controllers
 
             return Ok(reservaDTO);
         }
-       // POST: api/ReservasImpresora/CreateReservaImpresora3D
+       // POST: Impresora3DController/ReservasImpresoraController/CreateReservaImpresora3D
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(ReservaImpresoraDetalleDTO), (int)HttpStatusCode.Created)]

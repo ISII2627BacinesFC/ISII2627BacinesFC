@@ -20,7 +20,7 @@ namespace AppForSEII.API.Controllers
             _logger = logger;
         }
 
-        // GET: api/Reservas/GetImpresorasParaReserva?nombre=x&tipo=Filamento
+        // GET: Impresora3DController/ReservasController/GetImpresorasParaReserva?nombre=x&tipo=Filamento
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<ImpresoraParaReservaDTO>), (int)HttpStatusCode.OK)]
