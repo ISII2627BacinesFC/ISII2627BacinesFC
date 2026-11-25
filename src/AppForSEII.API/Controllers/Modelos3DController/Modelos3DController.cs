@@ -26,8 +26,7 @@ namespace AppForSEII.API.Controllers
                 .Where(m => (nombre == null || m.Nombre.Contains(nombre))
                          && (categoria == null || m.Categoria == categoria))
                 .OrderBy(m => m.Nombre)
-                .Select(m => new Modelo3DParaComprarDTO(m.Id, m.Nombre, m.Categoria,
-                    m.Licencia.Nombre, m.Formato, m.Precio))
+                .Select(m => new Modelo3DParaComprarDTO(m))
                 .ToListAsync();
 
             return Ok(modelos);
