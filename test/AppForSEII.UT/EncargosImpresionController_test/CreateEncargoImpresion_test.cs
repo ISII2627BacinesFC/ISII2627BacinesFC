@@ -54,6 +54,16 @@ namespace AppForSEII.UT.EncargosImpresionController_test
                 }
             );
 
+            int nextEncargoId = _context.EncargosImpresion.Count() + 1;
+            int nextLineaId = _context.LineasEncargo.Count() +1;
+
+            var expectedLineas = new List<LineaEncargoImpresionDTO>
+            {
+                new LineaEncargoImpresionDTO(nextLineaId, pieza.Nombre, material.Nombre, 2, 2.50m, 5.00m)
+            };
+
+            var expectedEncargoImpresionDTO = new EncargoImpresionDetalleDTO(nextEncargoId, "Rikcy", "Bobby", "Campus Universitario s/n, Albacete", "600123456", "Prueba de encargo exitoso", 5.00m, DateTime.Now, "TarjetaCredito", expectedLineas);
+
             // Fase Act:
             var result = await controller.CreateEncargoImpresion(dto);
 
@@ -61,14 +71,8 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
             var actualDTO = Assert.IsType<EncargoImpresionDetalleDTO>(createdResult.Value);
 
-            Assert.Equal("Ricky", actualDTO.NombreCliente);
-            Assert.Equal("Bobby", actualDTO.ApellidosCliente);
-            Assert.Equal("TarjetaCredito", actualDTO.MetodoPago);
-            Assert.Single(actualDTO.Lineas);
-
-            decimal precioEsperado = 5.00m;
-            Assert.Equal(precioEsperado, actualDTO.PrecioTotal);
-            Assert.Equal(precioEsperado, actualDTO.Lineas[0].Subtotal);
+            expectedEncargoImpresionDTO.FechaEncargo = actualDTO.FechaEncargo;
+            Assert.Equal(expectedEncargoImpresionDTO, actualDTO);
         }
 
         [Fact]
@@ -222,20 +226,24 @@ namespace AppForSEII.UT.EncargosImpresionController_test
                 }
             );
 
+            int nextEncargoId = _context.EncargosImpresion.Count() + 1;
+            int nextLineaId = _context.LineasEncargo.Count() +1;
+
+            var expectedLinea = new List<LineaEncargoImpresionDTO>
+            {
+                new LineaEncargoImpresionDTO(nextLineaId, pieza.Nombre, material.Nombre, 2, 2.50m, 5.00m)
+            };
+
+            var expectEncargoImpresionDTO = new EncargoImpresionDetalleDTO(nextEncargoId, "Rikcy", "Bobby", "Campus Universitario s/n, Albacete", "600123456", "Prueba de encargo exitoso", 5.00m, DateTime.Now, "TarjetaCredito", expectedLinea);
+
             // Act
             var result = await controller.CreateEncargoImpresion(dto);
 
             //Assert
             var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
             var actualDTO = Assert.IsType<EncargoImpresionDetalleDTO>(createdResult.Value);
-
-            Assert.Equal("Ricky", actualDTO.NombreCliente);
-            Assert.Equal("Bobby", actualDTO.ApellidosCliente);
-            Assert.Equal("TarjetaCredito", actualDTO.MetodoPago);
-            Assert.Single(actualDTO.Lineas);
-            decimal precioEsperado = 5.00m;
-            Assert.Equal(precioEsperado, actualDTO.PrecioTotal);
-            Assert.Equal(precioEsperado, actualDTO.Lineas[0].Subtotal);
+            expectEncargoImpresionDTO.FechaEncargo = actualDTO.FechaEncargo;
+            Assert.Equal(expectEncargoImpresionDTO, actualDTO);
 
         }
         [Fact]

@@ -34,12 +34,7 @@ namespace AppForSEII.API.Controllers
                 return NotFound();
             }
 
-            var compraDTO = new CompraModelo3DDetalleDTO(compra.Id, compra.NombreCliente, compra.ApellidosCliente,
-                compra.CorreoElectronico, compra.DireccionFacturacion, compra.FechaCompra, compra.PrecioTotal,
-                compra.MetodoPago, compra.Descripcion,
-                compra.Lineas.Select(l => new LineaCompraModeloDTO(l.Modelo.Id, l.Modelo.Nombre, l.Modelo.Categoria,
-                    l.Modelo.Formato, l.Modelo.Licencia.Nombre, l.Modelo.Licencia.FechaExpiracion,
-                    l.CantidadLicencias, l.PrecioUnidad, l.Subtotal)).ToList());
+                        var compraDTO = new CompraModelo3DDetalleDTO(compra);
 
             return Ok(compraDTO);
         }
@@ -57,6 +52,9 @@ namespace AppForSEII.API.Controllers
             if (compraParaCrear.MetodoPago == MetodoPago.Bizum)
                 ModelState.AddModelError("MetodoPago", "Error! El método de pago debe ser tarjeta de crédito o PayPal");
 
+            if (compraParaCrear?.Descripcion?.Length > 50)
+                ModelState.AddModelError("Descripción", "Error! La descripción no puede superar los 50 caracteres");
+
             Client? cliente = await _context.Clientes
                 .FirstOrDefaultAsync(c => c.UserName == compraParaCrear.CorreoElectronico);
 
@@ -65,6 +63,7 @@ namespace AppForSEII.API.Controllers
 
             if (ModelState.ErrorCount > 0)
                 return BadRequest(new ValidationProblemDetails(ModelState));
+            
 
             var compra = new CompraModelo3D(DateTime.Now, compraParaCrear.NombreCliente, compraParaCrear.ApellidosCliente,
                 compraParaCrear.CorreoElectronico, compraParaCrear.DireccionFacturacion, compraParaCrear.Descripcion,
@@ -92,12 +91,7 @@ namespace AppForSEII.API.Controllers
             _context.Add(compra);
             await _context.SaveChangesAsync();
 
-            var compraDetalle = new CompraModelo3DDetalleDTO(compra.Id, compra.NombreCliente, compra.ApellidosCliente,
-                compra.CorreoElectronico, compra.DireccionFacturacion, compra.FechaCompra, compra.PrecioTotal,
-                compra.MetodoPago, compra.Descripcion,
-                compra.Lineas.Select(l => new LineaCompraModeloDTO(l.Modelo.Id, l.Modelo.Nombre, l.Modelo.Categoria,
-                    l.Modelo.Formato, l.Modelo.Licencia.Nombre, l.Modelo.Licencia.FechaExpiracion,
-                    l.CantidadLicencias, l.PrecioUnidad, l.Subtotal)).ToList());
+                        var compraDetalle = new CompraModelo3DDetalleDTO(compra);
 
             return CreatedAtAction(nameof(GetCompraModelo3D), new { id = compra.Id }, compraDetalle);
         }

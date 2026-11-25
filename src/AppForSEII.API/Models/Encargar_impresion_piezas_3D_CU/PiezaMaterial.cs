@@ -25,7 +25,7 @@ namespace AppForSEII.API.Models
 
         public override bool Equals(object? obj)
         {
-            return obj is PiezaMaterial material && PiezaId == material.PiezaId && MaterialId == material.Material.ID;
+            return obj is PiezaMaterial material && PiezaId == material.PiezaId && MaterialId == material.MaterialId;
         }
         public override int GetHashCode()
         {

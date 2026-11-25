@@ -37,7 +37,7 @@ namespace AppForSEII.API.DTOs.EncargoImpresionDTOs
 
         [Required(ErrorMessage = "El número de teléfono es obligatorio.")]
         //Modiciacion Sprint2 Autoria: NADA
-        public string NumeroTelefono { get; set; };
+        public string NumeroTelefono { get; set; }
 
         [Required(ErrorMessage = "El método de pago es obligatorio.")]
         public string MetodoPago { get; set; } = string.Empty;
