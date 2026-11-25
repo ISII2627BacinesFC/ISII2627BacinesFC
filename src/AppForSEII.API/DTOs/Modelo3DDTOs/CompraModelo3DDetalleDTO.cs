@@ -40,6 +40,8 @@ public class CompraModelo3DDetalleDTO
     [StringLength(150, ErrorMessage = "La dirección no puede tener más de 150 caracteres.")]
     public string DireccionFacturacion { get; set; } = string.Empty;
 
+    public string Descripción { get; set; } = string.Empty;
+
     public DateTime FechaCompra { get; set; }
 
     public decimal PrecioTotal { get; set; }
