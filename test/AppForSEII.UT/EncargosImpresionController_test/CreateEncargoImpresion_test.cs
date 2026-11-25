@@ -54,6 +54,16 @@ namespace AppForSEII.UT.EncargosImpresionController_test
                 }
             );
 
+            int nextEncargoId = _context.EncargosImpresion.Count() + 1;
+            int nextLineaId = _context.LineasEncargo.Count() +1;
+
+            var expectedLineas = new List<LineaEncargoImpresionDTO>
+            {
+                new LineaEncargoImpresionDTO(nextLineaId, pieza.Nombre, material.Nombre, 2, 2.50m, 5.00m)
+            };
+
+            var expectedEncargoImpresionDTO = new EncargoImpresionDetalleDTO(nextEncargoId, "Rikcy", "Bobby", "Campus Universitario s/n, Albacete", "600123456", "Prueba de encargo exitoso", 5.00m, DateTime.Now, "TarjetaCredito", expectedLineas);
+
             // Fase Act:
             var result = await controller.CreateEncargoImpresion(dto);
 
@@ -61,14 +71,8 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
             var actualDTO = Assert.IsType<EncargoImpresionDetalleDTO>(createdResult.Value);
 
-            Assert.Equal("Ricky", actualDTO.NombreCliente);
-            Assert.Equal("Bobby", actualDTO.ApellidosCliente);
-            Assert.Equal("TarjetaCredito", actualDTO.MetodoPago);
-            Assert.Single(actualDTO.Lineas);
-
-            decimal precioEsperado = 5.00m;
-            Assert.Equal(precioEsperado, actualDTO.PrecioTotal);
-            Assert.Equal(precioEsperado, actualDTO.Lineas[0].Subtotal);
+            expectedEncargoImpresionDTO.FechaEncargo = actualDTO.FechaEncargo;
+            Assert.Equal(expectedEncargoImpresionDTO, actualDTO);
         }
 
         [Fact]
@@ -164,6 +168,115 @@ namespace AppForSEII.UT.EncargosImpresionController_test
             var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
             Assert.Equal($"El material con ID {materialIncompatible.ID} no es válido para la pieza '{pieza.Nombre}'.", badRequest.Value);
         }
-    }
 
+        // Prueba unitaria sprint2
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateEncargoImpresion_ErrorLongitudTelefono_test()
+        {
+            //Arrange
+            var mock = new Mock<ILogger<EncargosImpresionController>>();
+            var controller = new EncargosImpresionController(_context, mock.Object);
+
+            var pieza = _context.Piezas3D.First();
+            var material = _context.Materiales.First(m => m.Nombre == "PLA Blanco");
+
+            var dto = new EncargoImpresionCreateDTO(
+                "Ricky",
+                "Bobby",
+                "Campus Universitario s/n, Albacete",
+                "600123456357",
+                "TarjetaCredito",
+                "Prueba de encargo exitoso",
+                new List<LineaEncargoImpresionCreateDTO>
+                {
+                    new LineaEncargoImpresionCreateDTO(pieza.Id, material.ID, 2)
+                }
+            );
+
+            // Act
+            var result = await controller.CreateEncargoImpresion(dto);
+
+            //Assert
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("¡Error! El teléfono debe tener 9 dígitos.", badRequest.Value);
+
+        }
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateEncargoImpresion_LongitudTelefonoCorrecta_test()
+        {
+            //Arrange
+            var mock = new Mock<ILogger<EncargosImpresionController>>();
+            var controller = new EncargosImpresionController(_context, mock.Object);
+
+            var pieza = _context.Piezas3D.First();
+            var material = _context.Materiales.First(m => m.Nombre == "PLA Blanco");
+
+            var dto = new EncargoImpresionCreateDTO(
+                "Ricky",
+                "Bobby",
+                "Campus Universitario s/n, Albacete",
+                "600123456",
+                "TarjetaCredito",
+                "Prueba de encargo exitoso",
+                new List<LineaEncargoImpresionCreateDTO>
+                {
+                    new LineaEncargoImpresionCreateDTO(pieza.Id, material.ID, 2)
+                }
+            );
+
+            int nextEncargoId = _context.EncargosImpresion.Count() + 1;
+            int nextLineaId = _context.LineasEncargo.Count() +1;
+
+            var expectedLinea = new List<LineaEncargoImpresionDTO>
+            {
+                new LineaEncargoImpresionDTO(nextLineaId, pieza.Nombre, material.Nombre, 2, 2.50m, 5.00m)
+            };
+
+            var expectEncargoImpresionDTO = new EncargoImpresionDetalleDTO(nextEncargoId, "Rikcy", "Bobby", "Campus Universitario s/n, Albacete", "600123456", "Prueba de encargo exitoso", 5.00m, DateTime.Now, "TarjetaCredito", expectedLinea);
+
+            // Act
+            var result = await controller.CreateEncargoImpresion(dto);
+
+            //Assert
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result.Result);
+            var actualDTO = Assert.IsType<EncargoImpresionDetalleDTO>(createdResult.Value);
+            expectEncargoImpresionDTO.FechaEncargo = actualDTO.FechaEncargo;
+            Assert.Equal(expectEncargoImpresionDTO, actualDTO);
+
+        }
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateEncargoImpresion_ErrorLongitudMenorTelefono_test()
+        {
+            //Arrange
+            var mock = new Mock<ILogger<EncargosImpresionController>>();
+            var controller = new EncargosImpresionController(_context, mock.Object);
+
+            var pieza = _context.Piezas3D.First();
+            var material = _context.Materiales.First(m => m.Nombre == "PLA Blanco");
+
+            var dto = new EncargoImpresionCreateDTO(
+                "Ricky",
+                "Bobby",
+                "Campus Universitario s/n, Albacete",
+                "6001",
+                "TarjetaCredito",
+                "Prueba de encargo exitoso",
+                new List<LineaEncargoImpresionCreateDTO>
+                {
+                    new LineaEncargoImpresionCreateDTO(pieza.Id, material.ID, 2)
+                }
+            );
+
+            // Act
+            var result = await controller.CreateEncargoImpresion(dto);
+
+            //Assert
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.Equal("¡Error! El teléfono debe tener 9 dígitos.", badRequest.Value);
+
+        }
+    }
 }

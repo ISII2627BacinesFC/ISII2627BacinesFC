@@ -81,6 +81,11 @@ namespace AppForSEII.API.Controllers.EncargarImpresionPiezas3D_Controller
             {
                 return BadRequest("No existe ningún cliente registrado para asociar al encargo.");
             }
+            // Prueba autoria Sprint2
+            if (dto.NumeroTelefono.Length != 9)
+            {
+                return BadRequest("¡Error! El teléfono debe tener 9 dígitos.");
+            }
 
             var encargo = new EncargoImpresion
             {
