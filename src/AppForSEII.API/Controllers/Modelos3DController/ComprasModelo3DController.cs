@@ -57,7 +57,7 @@ namespace AppForSEII.API.Controllers
             if (compraParaCrear.MetodoPago == MetodoPago.Bizum)
                 ModelState.AddModelError("MetodoPago", "Error! El método de pago debe ser tarjeta de crédito o PayPal");
 
-            if (compraParaCrear.Descripcion.Length > 50)
+            if (compraParaCrear?.Descripcion?.Length > 50)
                 ModelState.AddModelError("Descripción", "Error! La descripción no puede superar los 50 caracteres");
 
             Client? cliente = await _context.Clientes
