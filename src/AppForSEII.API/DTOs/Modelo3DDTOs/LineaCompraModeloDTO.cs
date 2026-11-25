@@ -52,6 +52,13 @@ public class LineaCompraModeloDTO
                Subtotal == dto.Subtotal;
     }
 
+    public LineaCompraModeloDTO(LineaCompraModelo linea)
+        : this(linea.Modelo.Id, linea.Modelo.Nombre, linea.Modelo.Categoria, linea.Modelo.Formato,
+               linea.Modelo.Licencia.Nombre, linea.Modelo.Licencia.FechaExpiracion,
+               linea.CantidadLicencias, linea.PrecioUnidad, linea.Subtotal)
+    {
+    }
+
     public override int GetHashCode()
     {
         var hash = new HashCode();
