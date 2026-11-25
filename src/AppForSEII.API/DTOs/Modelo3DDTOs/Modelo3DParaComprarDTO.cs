@@ -43,6 +43,12 @@ public class Modelo3DParaComprarDTO
                Precio == dto.Precio;
     }
 
+    public Modelo3DParaComprarDTO(Modelo3D modelo)
+        : this(modelo.Id, modelo.Nombre, modelo.Categoria, modelo.Licencia.Nombre,
+               modelo.Formato, modelo.Precio)
+    {
+    }
+    
     public override int GetHashCode()
     {
         return HashCode.Combine(Id, Nombre, Categoria, Licencia, Formato, Precio);
