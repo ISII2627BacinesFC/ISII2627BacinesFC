@@ -34,12 +34,7 @@ namespace AppForSEII.API.Controllers
                 return NotFound();
             }
 
-            var compraDTO = new CompraModelo3DDetalleDTO(compra.Id, compra.NombreCliente, compra.ApellidosCliente,
-                compra.CorreoElectronico, compra.DireccionFacturacion, compra.FechaCompra, compra.PrecioTotal,
-                compra.MetodoPago, compra.Descripcion,
-                compra.Lineas.Select(l => new LineaCompraModeloDTO(l.Modelo.Id, l.Modelo.Nombre, l.Modelo.Categoria,
-                    l.Modelo.Formato, l.Modelo.Licencia.Nombre, l.Modelo.Licencia.FechaExpiracion,
-                    l.CantidadLicencias, l.PrecioUnidad, l.Subtotal)).ToList());
+                        var compraDTO = new CompraModelo3DDetalleDTO(compra);
 
             return Ok(compraDTO);
         }

@@ -22,6 +22,13 @@ public class CompraModelo3DDetalleDTO
         Lineas = lineas;
     }
 
+    public CompraModelo3DDetalleDTO(CompraModelo3D compra)
+        : this(compra.Id, compra.NombreCliente, compra.ApellidosCliente, compra.CorreoElectronico,
+               compra.DireccionFacturacion, compra.FechaCompra, compra.PrecioTotal, compra.MetodoPago,
+               compra.Descripcion, compra.Lineas.Select(l => new LineaCompraModeloDTO(l)).ToList())
+    {
+    }
+    
     public int Id { get; set; }
 
     [Required(ErrorMessage = "El nombre es obligatorio.")]
